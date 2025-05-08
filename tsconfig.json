@@ -6,6 +6,9 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "jsx": "react-jsx",
+    "types": [
+       "node"
+     ],
 
     /* Bundler mode */
     "outDir": "./dist",
