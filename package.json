@@ -1,7 +1,8 @@
 {
   "name": "react-global-signals",
   "author": "Rail Batyrshin",
-  "version": "0.0.2",
+  "private": false,
+  "version": "0.0.3",
   "type": "module",
   "license": "MIT",
   "publishConfig": {
@@ -15,12 +16,14 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/react-global-signals.umd.cjs",
-  "module": "./dist/react-global-signals.js",
+  "main": "./dist/react-global-signals.umd.js",
+  "module": "./dist/react-global-signals.es.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/react-global-signals.js",
-      "require": "./dist/react-global-signals.umd.cjs"
+      "import": "./dist/react-global-signals.es.js",
+      "require": "./dist/react-global-signals.umd.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "scripts": {
@@ -39,6 +42,7 @@
     "vite": "^6.3.5"
   },
   "dependencies": {
-    "@preact/signals-react": "^3.0.1"
+    "@preact/signals-react": "^3.0.1",
+    "vite-plugin-dts": "^4.5.3"
   }
 }

@@ -1,9 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import {resolve} from 'path'
+import { resolve } from "path";
+import dts from "vite-plugin-dts";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [dts()],
   build: {
     lib: {
       entry: resolve(__dirname, "./src/hooks/useStore.ts"),
@@ -12,10 +13,11 @@ export default defineConfig({
       fileName: (format) => `react-global-signals.${format}.js`,
     },
     rollupOptions: {
-      external: ["react"],
+      external: ["@preact/signals-react"],
       output: {
         name: "react-global-signals",
       },
     },
+    sourcemap: true,
   },
 });

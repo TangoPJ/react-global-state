@@ -6,9 +6,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "jsx": "react-jsx",
-    "types": [
-       "node"
-     ],
+    "types": ["node"],
 
     /* Bundler mode */
     "outDir": "./dist",
@@ -17,6 +15,8 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
+
+    "typeRoots": ["./dist/index.d.ts", "node_modules/@types"],
 
     /* Linting */
     "strict": true,
