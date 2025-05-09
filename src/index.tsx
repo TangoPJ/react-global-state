@@ -5,8 +5,4 @@ import { App } from "./App";
 import "./global.css";
 
 const root = createRoot(document.getElementById("app")!);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+root.render(<App />);

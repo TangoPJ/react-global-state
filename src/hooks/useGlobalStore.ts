@@ -1,5 +1,9 @@
 import { useComputed, useSignals } from "@preact/signals-react/runtime";
-import { signal, type Signal } from "@preact/signals-react";
+import {
+  signal,
+  type ReadonlySignal,
+  type Signal,
+} from "@preact/signals-react";
 
 export type TValue = string | number | boolean | null | undefined;
 
@@ -7,18 +11,24 @@ export { type Signal };
 
 const STORE: Record<string, Signal<TValue>> = {};
 
-export const useStore = (
+export const useGlobalStore = (
   key: string,
   initialValue: TValue = null,
 ): Signal<TValue> => {
   useSignals();
-  return (STORE[key] = STORE[key] ?? signal(initialValue));
+
+  const store = (STORE[key] = STORE[key] ?? signal(initialValue));
+
+  return store;
 };
 
-export const useHandleComputed = (keys: string | string[]) => {
+export const useHandleComputed = (
+  keys: string | string[],
+  fn: Function,
+): ReadonlySignal<TValue> | undefined => {
   if (!keys || !keys.length) {
     console.error("Keys must not be empty string or array");
-    return () => {};
+    return;
   }
 
   useSignals();
@@ -30,14 +40,18 @@ export const useHandleComputed = (keys: string | string[]) => {
   }
 
   for (const key of keys) {
-    storedValues.push(STORE[key]);
+    const storedValue = STORE[key];
+    if (storedValue) {
+      storedValues.push(STORE[key]);
+    }
   }
 
   if (isEmpty(storedValues)) {
     console.error("Store is empty");
+    return;
   }
 
-  return (fn: Function) => useComputed(() => fn.apply(null, storedValues));
+  return useComputed(() => fn.apply(null, storedValues));
 };
 
 const isEmpty = (arr: Signal<TValue>[]) => arr.length === 0;

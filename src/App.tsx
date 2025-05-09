@@ -1,26 +1,40 @@
 import {
   useHandleComputed,
-  useStore,
+  useGlobalStore,
   type Signal,
   type TValue,
-} from "./hooks/useStore";
+} from "./hooks/useGlobalStore";
+
+import styles from "./App.module.css";
 
 export const App = () => {
   return (
     <div style={{ display: "flex", gap: "1rem", flexDirection: "column" }}>
+      <h2>Signals:</h2>
       <div style={{ display: "flex", gap: ".5rem" }}>
         <FirstButton />
         <SecondButton />
       </div>
       <div
         style={{
-          display: "inline-flex",
-          width: "auto",
+          display: "flex",
           flexDirection: "column",
-          gap: "1rem",
+          alignItems: "flex-start",
+          justifyContent: "center",
         }}
       >
+        <h3>First component:</h3>
         <Result />
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          justifyContent: "center",
+        }}
+      >
+        <h3>Second component:</h3>
         <DoubledResult />
       </div>
     </div>
@@ -28,10 +42,10 @@ export const App = () => {
 };
 
 const FirstButton = () => {
-  const state = useStore("counter", 0);
+  const state = useGlobalStore("counter", 0);
   return (
     <button
-      style={{ width: "24px", height: "24px" }}
+      className={styles.button}
       onClick={() => {
         if (typeof state.value === "number") {
           state.value++;
@@ -44,11 +58,11 @@ const FirstButton = () => {
 };
 
 const SecondButton = () => {
-  const state = useStore("counter", 0);
+  const state = useGlobalStore("counter", 0);
 
   return (
     <button
-      style={{ width: "24px", height: "24px" }}
+      className={styles.button}
       onClick={() => {
         if (typeof state.value === "number") {
           state.value--;
@@ -60,17 +74,19 @@ const SecondButton = () => {
   );
 };
 
+let rerender = 0;
 const Result = () => {
-  const state = useStore("counter");
+  console.log("Renders: " + ++rerender);
+  const state = useGlobalStore("counter");
   return <p>Result: {state}</p>;
 };
 
 const DoubledResult = () => {
-  const computed = useHandleComputed("counter");
+  const computed = useHandleComputed(
+    "counter",
+    (current: Signal<TValue>) =>
+      typeof current.value === "number" && current.value * 2,
+  );
 
-  const result = computed((current: Signal<TValue>) => {
-    if (typeof current.value === "number") return current.value * 2;
-  });
-
-  return <p>Doubled value: {result ?? null}</p>;
+  return <p>Doubled value: {computed}</p>;
 };
