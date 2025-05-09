@@ -10,7 +10,7 @@ A simple and efficient way to manage global state for primitive values (strings,
 
 ## Installation
 ```bash
-npm install @preact/signals-react
+npm install react-global-signals
 ```
 
 ### Using
