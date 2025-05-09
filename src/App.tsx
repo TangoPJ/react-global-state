@@ -44,14 +44,7 @@ export const App = () => {
 const FirstButton = () => {
   const state = useGlobalStore("counter", 0);
   return (
-    <button
-      className={styles.button}
-      onClick={() => {
-        if (typeof state.value === "number") {
-          state.value++;
-        }
-      }}
-    >
+    <button className={styles.button} onClick={() => state.value++}>
       +
     </button>
   );
@@ -61,14 +54,7 @@ const SecondButton = () => {
   const state = useGlobalStore("counter", 0);
 
   return (
-    <button
-      className={styles.button}
-      onClick={() => {
-        if (typeof state.value === "number") {
-          state.value--;
-        }
-      }}
-    >
+    <button className={styles.button} onClick={() => state.value--}>
       -
     </button>
   );

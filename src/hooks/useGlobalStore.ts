@@ -11,20 +11,25 @@ export { type Signal };
 
 const STORE: Record<string, Signal<TValue>> = {};
 
-export const useGlobalStore = (
+export const useGlobalStore = <T extends TValue>(
   key: string,
-  initialValue: TValue = null,
-): Signal<TValue> => {
+  initialValue?: T,
+): Signal<T> => {
+  if (!(key in STORE) && initialValue === undefined) {
+    throw new Error(
+      `Store key "${key}" does not exist and no initialValue provided`,
+    );
+  }
+
   useSignals();
 
   const store = (STORE[key] = STORE[key] ?? signal(initialValue));
-
-  return store;
+  return store as Signal<T>;
 };
 
 export const useHandleComputed = (
   keys: string | string[],
-  fn: Function,
+  fn: (...args: Signal<TValue>[]) => any,
 ): ReadonlySignal<TValue> | undefined => {
   if (!keys || !keys.length) {
     console.error("Keys must not be empty string or array");
@@ -51,7 +56,7 @@ export const useHandleComputed = (
     return;
   }
 
-  return useComputed(() => fn.apply(null, storedValues));
+  return useComputed(() => fn(...storedValues));
 };
 
 const isEmpty = (arr: Signal<TValue>[]) => arr.length === 0;
