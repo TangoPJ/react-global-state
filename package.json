@@ -1,8 +1,11 @@
 {
   "name": "react-global-signals",
-  "author": "Rail Batyrshin",
-  "private": false,
-  "version": "0.0.3",
+  "author": {
+    "name": "Rail Batyrshin",
+    "url": "https://github.com/tangopj",
+    "email": "rail.batyrshin.js@gmail.com"
+  },
+  "version": "0.0.10",
   "type": "module",
   "license": "MIT",
   "publishConfig": {
@@ -16,33 +19,27 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/react-global-signals.umd.js",
-  "module": "./dist/react-global-signals.es.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/react-global-signals.es.js",
-      "require": "./dist/react-global-signals.umd.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
+  "main": "dist/index.js",
+  "private": false,
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc",
     "preview": "vite preview",
-    "prepublish": "rm -rf ./dist && npm run build"
+    "prepublishOnly": "rm -rf ./dist && npm run build"
   },
   "devDependencies": {
     "@types/node": "^22.15.17",
     "@types/react-dom": "^19.1.3",
     "@vitejs/plugin-react": "^4.4.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
     "typescript": "~5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^3.6.3"
   },
   "dependencies": {
-    "@preact/signals-react": "^3.0.1",
-    "vite-plugin-dts": "^4.5.3"
+    "@preact/signals-react": "^3.0.1"
+  },
+  "peerDependencies": {
+    "react": "^16.14.0 || 17.x || 18.x || 19.x",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
   }
 }
