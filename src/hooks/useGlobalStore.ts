@@ -29,7 +29,7 @@ export const useGlobalStore = <T extends TValue>(
 
 export const useHandleComputed = (
   keys: string | string[],
-  fn: (...args: Signal<Exclude<undefined | null, TValue>>[]) => any,
+  fn: (...args: Exclude<undefined | null, TValue>[]) => any,
 ): ReadonlySignal<TValue> | undefined => {
   useSignals();
 
@@ -55,7 +55,7 @@ export const useHandleComputed = (
     return;
   }
 
-  return useComputed(() => fn(...storedValues));
+  return useComputed(() => fn(...storedValues.map((s) => s.value)));
 };
 
 const isEmpty = (arr: Signal<TValue>[]) => arr.length === 0;

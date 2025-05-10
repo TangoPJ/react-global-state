@@ -75,12 +75,12 @@ const Result = () => {
 };
 
 const DoubledResult = () => {
-  const sum = useHandleComputed(["a", "b"], (a, b) => a.value + b.value);
+  const sum = useHandleComputed(["a", "b"], (a, b) => a + b);
 
   const a = useGlobalStore<number>("a");
   const b = useGlobalStore<number>("b");
 
-  const computed = useHandleComputed("counter", (current) => current.value * 2);
+  const computed = useHandleComputed("counter", (current) => current * 2);
 
   return (
     <>

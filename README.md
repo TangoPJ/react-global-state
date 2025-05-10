@@ -22,7 +22,7 @@ function FirstButton() {
   const counter = useGlobalStore<number>('counter', 0); // Type-safe: number
   return (
     <button onClick={() => counter.value++}>
-      + (Counter: {counter.value})
+      + (Counter: {counter})
     </button>
   );
 }
@@ -36,7 +36,7 @@ function SumDisplay() {
   const a = useGlobalStore<number>('a', 0);
   const b = useGlobalStore<number>('b', 0);
   const sum = useHandleComputed(['a', 'b'], (a, b) => (a || 0) + (b || 0));
-  return <p>Sum: {sum?.value}</p>;
+  return <p>Sum: {sum}</p>;
 }
 ```
 
