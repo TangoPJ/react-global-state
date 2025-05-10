@@ -1,9 +1,4 @@
-import {
-  useHandleComputed,
-  useGlobalStore,
-  type Signal,
-  type TValue,
-} from "./hooks/useGlobalStore";
+import { useHandleComputed, useGlobalStore } from "./hooks/useGlobalStore";
 
 import styles from "./App.module.css";
 
@@ -43,8 +38,15 @@ export const App = () => {
 
 const FirstButton = () => {
   const state = useGlobalStore("counter", 0);
+  const a = useGlobalStore<number>("a", 0);
   return (
-    <button className={styles.button} onClick={() => state.value++}>
+    <button
+      className={styles.button}
+      onClick={() => {
+        state.value++;
+        a.value++;
+      }}
+    >
       +
     </button>
   );
@@ -52,27 +54,40 @@ const FirstButton = () => {
 
 const SecondButton = () => {
   const state = useGlobalStore("counter", 0);
+  const b = useGlobalStore<number>("b", 0);
 
   return (
-    <button className={styles.button} onClick={() => state.value--}>
+    <button
+      className={styles.button}
+      onClick={() => {
+        state.value--;
+        b.value++;
+      }}
+    >
       -
     </button>
   );
 };
 
-let rerender = 0;
 const Result = () => {
-  console.log("Renders: " + ++rerender);
   const state = useGlobalStore("counter");
   return <p>Result: {state}</p>;
 };
 
 const DoubledResult = () => {
-  const computed = useHandleComputed(
-    "counter",
-    (current: Signal<TValue>) =>
-      typeof current.value === "number" && current.value * 2,
-  );
+  const sum = useHandleComputed(["a", "b"], (a, b) => a.value + b.value);
 
-  return <p>Doubled value: {computed}</p>;
+  const a = useGlobalStore<number>("a");
+  const b = useGlobalStore<number>("b");
+
+  const computed = useHandleComputed("counter", (current) => current.value * 2);
+
+  return (
+    <>
+      <p>Doubled value: {computed}</p>
+      <p>Sum: {sum}</p>
+      <p>a: {a}</p>
+      <p>b: {b}</p>
+    </>
+  );
 };

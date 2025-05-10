@@ -16,7 +16,7 @@ npm install react-global-signals
 ### Using
 #### Creating a Global Store
 ```tsx
-import { useGlobalStore } from './useGlobalStore';
+import { useGlobalStore } from 'react-global-signals';
 
 function FirstButton() {
   const counter = useGlobalStore<number>('counter', 0); // Type-safe: number
@@ -30,7 +30,7 @@ function FirstButton() {
 
 #### Computing Values
 ```tsx
-import { useGlobalStore, useHandleComputed } from './useGlobalStore';
+import { useGlobalStore, useHandleComputed } from 'react-global-signals';
 
 function SumDisplay() {
   const a = useGlobalStore<number>('a', 0);
