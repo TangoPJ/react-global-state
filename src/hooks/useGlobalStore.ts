@@ -15,15 +15,10 @@ export const useGlobalStore = <T extends TValue>(
   key: string,
   initialValue?: T,
 ): Signal<T> => {
-  if (!(key in STORE) && initialValue === void 0) {
-    throw new Error(
-      `Store key "${key}" does not exist and no initialValue provided`,
-    );
-  }
-
   useSignals();
 
-  const store = (STORE[key] = STORE[key] ?? signal(initialValue));
+  const defaultValue = initialValue === void 0 ? null : initialValue;
+  const store = (STORE[key] = STORE[key] ?? signal(defaultValue));
   return store as Signal<T>;
 };
 
